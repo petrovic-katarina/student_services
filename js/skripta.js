@@ -91,31 +91,33 @@ window.onload = function () {
 }
 
 
-function proveraForme(forma) {
+function checkForms(form) {
 	var retVal = true;
 
-	var city = forma.name.value;
-	if (city == '' || city != city.toUpperCase()) {
-		alert('Molimo unesite grad velikim pocetnim slovom!');
+	var city = form.name.value;
+	if (city == '' || city[0] != city[0].toUpperCase()) {
+		alert('Please enter the city with a capital letter at the beginning.');
 		retVal = false;
 	}
 
-	var country = forma.country.value;
+	var country = form.country.value;
 	if (country == '') {
-		alert('Molimo unesite drzavu!');
+		alert('Please enter the country.');
 		retVal = false;
 	}
 
-	var sel1 = forma.sel1.value;
+	var sel1 = form.sel1.value;
 	if (sel1 == '') {
-		alert('Molimo odaberite ponudjeno!');
+		alert('Please choose from the ones offered.');
 		retVal = false;
 	}
 
+	if (sel1 != '' || sel1.length > 2) {
+		alert('The abbreviation for the name of the country must not have more than three characters.');
+		retVal = false;
+	}
 
 	return retVal;
-
-
 }
 
 function selectTicked() {
