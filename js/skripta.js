@@ -66,12 +66,9 @@ cities.push(city9);
 
 var countries = ["RS", "UK", "ESP"]
 
-
-
-
-
 window.onload = function () {
 	let sel1 = document.getElementById('sel1');
+	let sel2 = document.getElementById('sel2');
 
 	for (var i = 0; i < countries.length; i++) {
 		var country = countries[i];
@@ -80,14 +77,8 @@ window.onload = function () {
 		el.value = country;
 		sel1.appendChild(el);
 	}
-	let sel2 = document.getElementById('sel2');
-	for (var i = 0; i < cities.length; i++) {
-		var city = cities[i];
-		var el = document.createElement('option');
-		el.textContent = city;
-		el.value = city;
-		sel2.appendChild(el);
-	}
+
+	selectTicked();
 }
 
 
@@ -112,7 +103,7 @@ function checkForms(form) {
 		retVal = false;
 	}
 
-	if (sel1 != '' || sel1.length > 2) {
+	if (sel1 = '' || country.length > 3) {
 		alert('The abbreviation for the name of the country must not have more than three characters.');
 		retVal = false;
 	}
@@ -120,13 +111,58 @@ function checkForms(form) {
 	return retVal;
 }
 
-function selectTicked() {
 
+function selectTicked() {
+	let sel1 = document.getElementById('sel1');
+	let sel2 = document.getElementById('sel2');
+
+	let capitalCheckbox = document.getElementById('capital');
+
+	sel2.innerHTML = '';
+	sel2.style.visibility = 'hidden';
+	sel2.disabled = true;
+	capitalCheckbox.checked = false;
+
+
+	for (let i = 0; i < cities.length; i++) {
+		var city = cities[i];
+
+		if (city.country == sel1.value) {
+			var el = document.createElement('option');
+			el.textContent = city.name;
+			el.value = city.name;
+			sel2.appendChild(el);
+
+			if (city.capital) {
+				capitalCheckbox.checked = true;
+			}
+		}
+	}
+
+	sel2.style.visibility = 'visible';
+	sel2.disabled = false;
+
+	handleCheckox();
 }
+
 
 function handleCheckox() {
+	let sel2 = document.getElementById('sel2');
+	let capitalCheckbox = document.getElementById('capital');
 
+	let selectedCityName = sel2.value;
+
+	let selectedCity = cities.find(city => city.name === selectedCityName);
+
+	if (selectedCity && selectedCity.capital) {
+		capitalCheckbox.checked = true;
+	} else {
+		capitalCheckbox.checked = false;
+	}
 }
+
+
+
 
 
 
